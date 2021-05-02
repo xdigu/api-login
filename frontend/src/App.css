@@ -1,0 +1,37 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+}
+
+.Container p {
+  padding: 0 5px 0 0;
+  margin: 0px;
+}
+
+.Container input {
+  height: 20px;
+}
+
+.Button {
+  color: black;
+  background-color: white;
+  height: 30px;
+  width: 80px;
+}

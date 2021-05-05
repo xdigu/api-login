@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import type { Request, Response } from 'express'
 
 import authMiddleware from '../middleware/authMiddleware'
+import { validateUserInput } from '../utils'
 import Users from '../db/users'
 
 const routes = Router()
@@ -41,17 +42,18 @@ routes.post(
 routes.post(
   '/user',
   async (req, res): Promise<Response> => {
-    const { name, user, pass } = req.body
+    const { name, user: nickName, pass } = req.body
 
-    if (!user || !pass || !name)
-      return res.send({ message: 'You must provide user and pass.' })
+    const isUserInputOk = validateUserInput(name, nickName, pass)
 
-    const isUserAlreadyRegistred = Users.some((User) => User.name === name)
+    if (!isUserInputOk) return res.send({ message: 'Incorrect user values.' })
+
+    const isUserAlreadyRegistred = Users.some((User) => User.user === nickName)
 
     if (isUserAlreadyRegistred)
       return res.send({ message: 'User already registred.' })
 
-    Users.push({ name, user, pass })
+    Users.push({ name, user: nickName, pass })
 
     return res.json({ message: 'User registred' })
   }

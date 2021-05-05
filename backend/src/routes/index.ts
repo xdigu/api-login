@@ -34,7 +34,7 @@ routes.post(
       httpOnly: false
     })
 
-    return res.send({ token })
+    return res.json({ token })
   }
 )
 
@@ -53,7 +53,7 @@ routes.post(
 
     Users.push({ name, user, pass })
 
-    return res.send({ message: 'User registred', user: { name, user } })
+    return res.json({ message: 'User registred' })
   }
 )
 
@@ -63,7 +63,7 @@ routes.get(
   (req: Request, res: Response): Response => {
     const { name, user } = req.user || {}
 
-    return res.send({ name, user })
+    return res.json({ name, user })
   }
 )
 

@@ -8,7 +8,7 @@ const App = (): JSX.Element => {
     data.append('user', 'xdigu')
     data.append('pass', '1234')
 
-    fetch('http://localhost/api/auth', {
+    fetch('/api/auth', {
       method: 'POST',
       body: data
     })

@@ -1,0 +1,32 @@
+version: "3"
+services:
+  api:
+    image: backend
+    restart: always
+    ports:
+      - "8080:8080"
+    container_name: node-api
+    volumes:
+      - ./backend:/app
+      - /backend/node_modules
+    environment:
+      - SECRET=mysecret
+    networks: [webappnetwork]
+
+  client:
+    image: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    container_name: react-ui
+    stdin_open: true
+    volumes:
+      - ./frontend:/app
+      - /frontend/node_modules
+    links:
+      - api
+    networks: [webappnetwork]
+
+networks:
+  webappnetwork:
+    driver: bridge

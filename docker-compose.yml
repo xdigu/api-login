@@ -37,9 +37,6 @@ services:
     depends_on:
       - api
       - web-client
-    # links:
-    #   - api
-    #   - web-client
     ports:
       - "3000:80"
     networks: [webappnetwork]

@@ -1,10 +1,10 @@
 version: "3"
 services:
   api:
-    image: backend
     restart: always
-    ports:
-      - "8080:8080"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     container_name: node-api
     volumes:
       - ./backend:/app
@@ -13,11 +13,11 @@ services:
       - SECRET=mysecret
     networks: [webappnetwork]
 
-  client:
-    image: frontend
+  web-client:
     restart: always
-    ports:
-      - "3000:3000"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     container_name: react-ui
     stdin_open: true
     volumes:
@@ -25,6 +25,23 @@ services:
       - /frontend/node_modules
     links:
       - api
+    networks: [webappnetwork]
+
+  web-nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    container_name: web-server
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+    depends_on:
+      - api
+      - web-client
+    # links:
+    #   - api
+    #   - web-client
+    ports:
+      - "3000:80"
     networks: [webappnetwork]
 
 networks:
